@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+
+{% block head %}
+
+{% endblock %}
+
+
+{% block content %} {% load crispy_forms_tags %}
+
+        <div class='row'>
+          <div class='col-md-12'>
+            <h3>Twitter Accounts</h3>
+
+            <div class='col-md-6'>
+              <form method='post' role="form">{% csrf_token %}
+                      {% crispy form %}
+              </form>
+              <br>
+              <br>
+              <ul>
+              {% for account in twitteraccts %}
+              <li>
+                <a href='#'>{{account.twittername}}</a></li>{% endfor %}
+              </ul>
+              <hr>
+            </div>
+
+            <div class='col-md-6'>
+              <p>These are needed so you can communicate with twitter and get info.</p>
+              <p>If you are just setting up a twitter account, go <a href="">here</a></p>
+              <p>If you need help finding these settings, <a href="">click here</a> and we will walk you through it!</p>
+            </div>
+
+          </div>
+        </div>
+{% endblock %}
+
+
+
+
+
+{% block scripts %}
+
+<script type="text/javascript">
+
+</script>
+
+{% endblock %}
+
+
+
+
+
+
+
+              
+
+             

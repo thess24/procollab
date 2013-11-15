@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+
+
+{% block head %}
+
+{% endblock %}
+
+
+{% block content %} {% load crispy_forms_tags %}
+
+        <div class='row'>
+          <div class='col-md-12'>
+            <h3>Engage Twitter</h3>
+
+            <div class='col-md-6'>
+              <form method='get' role="form">{% csrf_token %}
+                {% crispy form %}
+              </form>
+            </div>
+
+            <div class='col-md-6'>
+              <p>We have a number of special searches! </p>
+              <p>If you are just setting up a twitter account, go <a href="">here</a></p>
+              <p>If you need help finding these settings, <a href="">click here</a> and we will walk you through it!</p>
+            </div>
+
+          </div>
+        </div>
+<hr>
+        <div class='row'>
+          <div class='col-md-12'>      
+          <div class="panel-group" id="accordion">
+            {% for status in searchresults %}
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h4 class="panel-title">
+                  <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{forloop.counter}}">
+                        <div>
+                          <h4><span>{{ status.text }}</span></h4>
+                          <i class="{{link.linktype}}"></i>
+                          by <a class="profile" href="">{{ status.user.screen_name }}</a>({{status.user.followers_count}} Followers) 
+                          {{ status.created_at|timesince }} ago |
+                          <span>{{ status.favorite_count  }} favorites | {{ status.retweet_count  }} retweets </span>
+                        </div>
+                  </a>
+                </h4>
+              </div>
+              <div id="collapse{{forloop.counter}}" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <form method='post'>{% csrf_token %}
+                      <input type='hidden' value='{{status.id_str}}' name='tweetatid'>
+                      <input type='text' class='form-control' name='tweettext'><br>
+                      <button class='btn' type='submit' name='tweet'>Tweet</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+
+          </div>
+        </div>
+
+
+{% endblock %}
+
+
+
+
+
+
+
+{% block scripts %}
+
+<script type="text/javascript">
+
+</script>
+
+{% endblock %}
+
+
+
+
+
+
+
+              
+
+             

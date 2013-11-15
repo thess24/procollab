@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+
+{% block head %}
+
+{% endblock %}
+
+
+{% block content %} 
+
+        <div class='row'>
+          <div class='col-md-12'>
+            <h3>Twitter Accounts</h3>
+
+            <div class='col-md-6'>
+              <form method='get' role="form">{% csrf_token %}
+                      <br>
+                <button type="submit" class="btn btn-default" name='twitteranalysis'>Analyze Account</button>
+              </form>
+              <br>
+              <br>
+              <ul>
+              {% for f in followers %}
+              <li>
+                <a href='#'>{{f.user.name}}</a>
+              </li>
+              {% endfor %}
+              </ul>
+              <hr>
+            </div>
+
+            <div class='col-md-6'>
+              <p>These are needed so you can communicate with twitter and get info.</p>
+              <p>If you are just setting up a twitter account, go <a href="">here</a></p>
+              <p>If you need help finding these settings, <a href="">click here</a> and we will walk you through it!</p>
+            </div>
+
+          </div>
+        </div>
+{% endblock %}
+
+ 
+
+
+
+{% block scripts %}
+
+<script type="text/javascript">
+
+$(document).ready(function(){
+
+
+    $('#id_twittername').addClass('form-control');
+    $('#id_consumer_key').addClass('form-control');
+    $('#id_consumer_secret').addClass('form-control');
+    $('#id_access_token_key').addClass('form-control');
+    $('#id_access_token_secret').addClass('form-control');
+
+});
+
+
+</script>
+
+{% endblock %}
+
+
+
+
+
+
+
+              
+
+             

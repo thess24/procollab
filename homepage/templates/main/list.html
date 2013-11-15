@@ -1,0 +1,248 @@
+{% extends 'base.html' %}
+
+
+{% block head %}
+<style type="text/css">
+
+	body {
+	  color: rgb(120, 120, 120);
+	}
+
+  form{
+    display: inline-block;
+  }
+
+  .maincolor{
+    color:rgb(79, 159, 207)
+  }
+
+  .blue-hover:hover{
+      color: blue;
+      cursor:pointer;
+  }
+  .green-hover:hover{
+      color: green;
+      cursor:pointer;
+  }
+  .red-hover:hover{
+      color: red;
+      cursor:pointer;
+  }
+
+  .choicesrow{
+    display: none;
+  }
+  .itemrow td a{
+    color:rgb(180,180,180);
+  }
+
+  .struck{
+    text-decoration: line-through;
+  }
+  .del-check{
+    line-height: 0;
+    padding-right: 0px;
+    padding-top: 0px;
+    padding-left: 0px;
+    padding-bottom: 3px;
+    background: none;
+  }
+
+  input[type='checkbox']{
+    margin-left:4px;
+  }
+
+</style>
+{% endblock %}
+
+
+{% block content %} 
+        <div class="page-header">
+
+          <div class='row'>
+            <div class='col-md-12'>
+
+              <div class='col-md-7'>
+              <h1 class='maincolor'>{%if user.is_authenticated%}{{request.user|capfirst}}{%endif%}</h1>
+              <h3 id='fulltime'></h3>
+              <ul class="nav nav-pills">
+                <li><a href="/">Homepage</a></li>
+                <li><a href="/managewidgets">Manage Widgets</a></li>
+              </ul>
+              </div>
+
+              <div class='col-md-5' style='margin-top:20px'>
+                <blockquote>
+                  <p style='font-size:1.2em'>It is amazing how complete is the delusion that beauty is goodness</p>
+                  <small>Leo Tolstoy,  <cite title="Source Title">The Kreutzer Sonata</cite></small>
+                </blockquote>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        
+        <div class='row'>
+          <div class='col-md-12'>
+
+
+            <form method='post' class="form-inline" role="form">{% csrf_token %}
+            <div class="form-group">{{form.name}}</div>
+              <div class="form-group">{{form.icon}}</div>
+              <label for='id_sticky'>Sticky?</label><div class="form-group">{{form.sticky}}</div>
+              <label for='id_secret'>Hidden</label><div class="form-group">{{form.secret}}</div>
+              <button type="submit" class="btn btn-default" name='add' id='addlist'>Add List</button>
+            </form>
+
+            <hr>
+
+
+              <div class="panel-group" id="accordion">
+                {% for l in lists%}
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <h4 class="panel-title">
+                      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse{{forloop.counter}}">
+                        <span class='glyphicon {{l.icon}}'></span> {{l.name}}
+                      </a>
+                    </h4>
+                  </div>
+                  <div id="collapse{{forloop.counter}}" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <table class="table table-hover table-condensed">
+                         <tbody>
+                            {% for i in items %}{% ifequal l.name i.listfk.name%}
+                            <tr class='itemrow'>
+                              {% if not i.complete%}
+                                {% if i.url %}<td><a href="{{i.url}}">{{i.text}}</A></td>
+                                {% else %}<td>{{i.text}}</td>{% endif %}
+                                <td>
+                                  <div class='choicesrow pull-right'>
+                                      <form method='post' >{% csrf_token %}
+                                        <input type='hidden' value='{{i.id}}' name='id'>  
+                                        <button type='submit' name='check' class='btn btn-xs green-hover del-check'><span class='glyphicon glyphicon-ok'></span></button>
+                                      </form>
+                                      <form method='post'>{% csrf_token %}
+                                        <input type='hidden' value='{{i.id}}' name='id'> 
+                                        <button type='submit' name='delete' class='btn btn-xs red-hover del-check'><span class='glyphicon glyphicon-trash'></span></button>
+                                      </form>   
+                                  </div>
+                                </td>
+                              {% else %}
+                                {% if i.url %}<td class='struck'><a href="{{i.url}}">{{i.text}}</a></td>
+                                {% else %}<td class='struck'>{{i.text}}</td>{% endif %}
+                                <td>
+                                  <div class='choicesrow pull-right'>
+                                      <form method='post' class='form-inline'>{% csrf_token %}
+                                        <input type='hidden' value='{{i.id}}' name='id'>  
+                                        <button type='submit' name='delete' class='btn btn-xs red-hover del-check'><span class='glyphicon glyphicon-trash'></span></button>
+                                      </form>   
+                                  </div>
+                                </td>  
+                              {% endif %}
+                            </tr>
+                             {% endifequal %}{% endfor %}
+                             <tr class='itemrow'>
+                                <td></td>
+                                <td style="height:30px">
+                                  <div class='choicesrow pull-right'>
+                                      <form method='post' >{% csrf_token %}
+                                        <input type='hidden' value='{{l.id}}' name='id'>  
+                                        <button type='submit' name='additem' class='btn btn-xs green-hover del-check'><span class='glyphicon glyphicon-plus'></span></button>
+                                      </form>
+                                  </div>
+                                </td>
+                             </tr>
+                          </tbody>
+                        </table> 
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
+              </div>
+          </div>
+        </div>
+{% endblock %}
+
+
+
+
+
+{% block scripts %}
+<script>
+
+function updateClock(){
+    var fulltime = moment().format('MMMM Do YYYY, h:mm a');
+    $('#fulltime').html(fulltime)
+}
+
+$(document).ready(function(){
+	updateClock()
+   setInterval('updateClock()', 10000);
+});
+
+$(function(){
+    $('.itemrow').mouseenter(function(){
+        $(this).find('.choicesrow').show();
+    });
+    $('.itemrow').mouseleave(function(){
+        $(this).find('.choicesrow').hide();
+    });
+});
+
+$(function(){
+    $('#id_name').addClass('form-control').attr('placeholder', "List Name");
+    $('#id_icon').addClass('form-control');
+});
+
+</script>
+ 
+
+ <script type="text/javascript">
+
+if($(".panel").length == 0) {
+    var tour = {
+      id: "hello-hopscotch",
+      steps: [
+        {
+          title: "Add List",
+          content: "Add your first list here.",
+          target: "addlist",
+          placement: "right",
+          yOffset: -15
+
+        },
+        {
+          title: "Sticky",
+          content: "Sticky items will appear on top",
+          target: 'id_sticky',
+          placement: "top",
+          xOffset: -30
+        },
+        {
+          title: "Hidden",
+          content: "Hidden items will appear on the list page, but won't take up space on the front page",
+          target: 'id_secret',
+          placement: "bottom",
+          xOffset: -15
+
+        }
+      ]
+    };
+
+    // Start the tour!
+    hopscotch.startTour(tour);
+};
+
+</script>
+{% endblock %}
+
+
+
+
+
+
+
+              
+
+             

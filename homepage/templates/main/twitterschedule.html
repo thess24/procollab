@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+
+
+{% block head %}
+
+    <link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/1.6.4/fullcalendar.css" rel="stylesheet">
+    <link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/1.6.4/fullcalendar.print.css" rel="stylesheet">
+    <link href="{{STATIC_URL}}css/extendedfullcalendar.css" rel="stylesheet">
+
+
+{% endblock %}
+
+
+{% block content %} {% load crispy_forms_tags %}
+
+        <div class='row'>
+          <div class='col-md-12'>
+            <h3>Scheduled Tweets</h3>
+
+            <div class='col-md-8'>
+              <form method='post' role="form">{% csrf_token %}
+                      {% crispy form %}
+              </form>
+              <br>
+              <br>
+              <ul>
+              {% for t in tweets %}
+              <li>
+                {{t.tweet}} - {{t.time}}
+              </li>
+              {% endfor %}
+              </ul>
+              <hr>
+            </div>
+
+            <div class='col-md-4'>
+              <div id='calendar'></div>
+            </div>
+
+          </div>
+        </div>
+{% endblock %}
+
+
+
+
+
+{% block scripts %}
+
+
+<script type="text/javascript" src='//cdnjs.cloudflare.com/ajax/libs/fullcalendar/1.6.4/fullcalendar.min.js'></script>
+
+<script type="text/javascript">
+
+  /* initialize the calendar
+  -----------------------------------------------------------------*/
+$(document).ready(function() {
+
+    var calendar = $('#calendar').fullCalendar({
+    defaultView: 'month',
+    buttonText: {
+      prev: '<i class=" glyphicon glyphicon-chevron-left"></i>',
+      next: '<i class=" glyphicon glyphicon-chevron-right"></i>'
+    },
+  
+    header: {
+      left: 'prev,next',
+      center: 'title',
+      right: 'month,agendaWeek'
+    },
+    events: [
+    // // {% for wd in workday %}
+    // {
+    //   title: '{{wd.hospital}}- {{wd.unit}}',
+    //   start: new Date({{wd.start|date:'Y'}}, {{wd.start|date:'m'}}-1, {{wd.start|date:'d'}}, {{wd.start|date:'h'}}, {{wd.start|date:'i'}}),
+    //   end: new Date({{wd.end|date:'Y'}}, {{wd.end|date:'m'}}-1, {{wd.end|date:'d'}},{{wd.end|date:'h'}}, {{wd.end|date:'i'}}),
+    //   allDay: false
+    // },
+    // // {% endfor %}
+    // // {% for wd in hoursavailable %}
+    // {
+    //   title: 'Available',
+    //   start: new Date({{wd.start|date:'Y'}}, {{wd.start|date:'m'}}-1, {{wd.start|date:'d'}}, {{wd.start|date:'h'}}, {{wd.start|date:'i'}}),
+    //   end: new Date({{wd.end|date:'Y'}}, {{wd.end|date:'m'}}-1, {{wd.end|date:'d'}},{{wd.end|date:'h'}}, {{wd.end|date:'i'}}),
+    //   className: 'label-success',
+    //   allDay: false
+
+    // },
+    // // {% endfor %}
+    ]
+    ,
+      selectable: true,
+    });
+
+});
+    </script>
+
+
+{% endblock %}
+
+
+
+
+
+
+
+              
+
+             

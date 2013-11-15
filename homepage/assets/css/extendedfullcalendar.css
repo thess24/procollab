@@ -1,0 +1,122 @@
+/* full calendar */
+.fc-header-title > h2 {
+  font-size: 22px;
+  color: #65A0CE;
+}
+.fc-widget-header,
+.fc-widget-content {
+  border: 1px solid #BCD4E5;
+}
+.fc-state-highlight {
+  background: #FFC;
+}
+.fc-event-skin {
+  border: none !important;
+  /* default BORDER color */
+
+  background-color: #ABBAC3;
+  padding: 0 0 1px 2px;
+}
+.label-yellow .fc-event-skin {
+  color: #996633;
+}
+.label-light .fc-event-skin {
+  color: #888;
+}
+[class*="label-"] > .fc-event-skin,
+[class*="label-"] > .fc-event-skin > .fc-event-skin.fc-event-head {
+  background-color: inherit;
+}
+.fc-event-skin.ui-draggable-dragging {
+  cursor: move;
+}
+.fc-event-skin.fc-event-vert,
+.fc-event-vert > .fc-event-skin {
+  padding: 0 0 1px;
+}
+.fc-grid .fc-day-number {
+  color: #2E6589;
+}
+.fc-widget-header {
+  background: #ECF2F7;
+  color: #8090A0;
+}
+.fc-event-hori,
+.fc-event-vert {
+  border-radius: 0 !important;
+  border-color: transparent;
+}
+.fc-event-vert .fc-event-content {
+  padding-left: 1px;
+  padding-right: 1px;
+}
+.fc-event-vert .fc-event-time {
+  padding: 0;
+}
+.fc-state-default {
+  border: none;
+}
+.fc-state-default,
+.fc-state-default .fc-button-inner {
+  border: none;
+  background-color: #ABBAC3;
+  color: #FFF;
+  background-image: none;
+  box-shadow: none;
+  text-shadow: none;
+  border-radius: 0 !important;
+  margin-left: 2px;
+}
+.fc-state-default .fc-button-effect {
+  display: none;
+}
+.fc-state-disabled,
+.fc-state-disabled .fc-button-inner {
+  opacity: 0.75;
+  filter: alpha(opacity=75);
+  color: #DDD;
+}
+.fc-state-active,
+.fc-state-active .fc-button-inner {
+  border-color: #4F99C6;
+  background-color: #6FB3E0;
+}
+.fc-state-hover,
+.fc-state-hover .fc-button-inner {
+  background-color: #8B9AA3;
+}
+.external-event {
+  margin: 6px 0;
+  padding: 0;
+  cursor: default;
+  display: block;
+  color: #FFF;
+  background-color: #ABBAC3;
+  font-size: 13px;
+  line-height: 28px;
+}
+.external-event:hover {
+  opacity: 1;
+  filter: alpha(opacity=100);
+}
+.external-event.ui-draggable-dragging {
+  cursor: move;
+}
+.external-event > [class*="icon-"]:first-child {
+  /* the move & drag icon */
+
+  display: inline-block;
+  height: 32px;
+  width: 32px;
+  text-align: center;
+  line-height: 30px;
+  margin-right: 5px;
+  font-size: 15px;
+  border-right: 1px solid #FFF;
+}
+
+
+
+.fc-button{
+font-size:.7em;
+}

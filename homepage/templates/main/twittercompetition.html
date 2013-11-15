@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+
+{% block head %}
+
+{% endblock %}
+
+
+{% block content %} {% load crispy_forms_tags %}
+
+        <div class='row'>
+          <div class='col-md-12'>
+            <h3>Accounts to Track</h3>
+
+              <form method='post' role="form" class='form-inline'>{% csrf_token %}
+                    {% crispy form %}
+              </form>
+              <br> 
+              <hr> 
+          </div>
+        </div>
+
+
+        <div class='row'>
+          <div class='col-md-12'>
+              {% for c in competitors %}
+              <h3>{{c.competitorname}}  <small>@{{c.competitorhandle}}</small></h3>
+              {% endfor %}
+          </div>
+        </div>
+
+
+{% endblock %}
+
+
+
+{% block scripts %}
+
+<script type="text/javascript">
+
+$(document).ready(function(){
+
+
+    $('#id_competitorname').addClass('form-group form-control');
+    $('#id_competitorhandle').addClass('form-group form-control');
+
+
+});
+
+
+</script>
+
+{% endblock %}
+
+
+
+
+
+
+
+              
+
+             

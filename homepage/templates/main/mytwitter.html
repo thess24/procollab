@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+
+
+{% block head %}
+<style type="text/css">
+.panel:hover{
+background-color:rgb(240,240,240);
+}
+
+</style>
+{% endblock %}
+
+
+{% block content %} 
+
+        <div class='row'>
+          <div class='col-md-12'>
+            <h3>My Twitter</h3>
+
+            <form method='get' role="form">{% csrf_token %}
+              <button type="submit" class="btn btn-default" name='pulltwitter'>Refresh Info</button>
+            </form>
+
+          </div>
+        </div>
+<hr>
+
+        <div class='row'>
+          <div class='col-md-12'>
+          <h4>Summary</h4>      
+            <div class='clearfix'>
+              <div>
+                <h4><span>{{ summarydata.statuses_count }} Tweets </span></h4>
+                <span>{{ summarydata.followers_count }} Followers |</span>
+                <span>{{ summarydata.favorites_count }} Favorites |</span>
+                <span>{{ summarydata.friends_count }}  Friends</span>
+              </div>
+            </div>  
+          </div>
+        </div>
+
+        <br>
+        
+        <div class='row'>
+          <div class='col-md-12'>
+          <h4>Tweets</h4>      
+            {% for t in tweets %}
+            <div class='panel panel-default'>
+              <div class='panel-body'>
+                <h4><span>{{ t.text }}</span></h4>
+                <span>{{ t.created_at}} |</span>
+                <span>{{ t.favorite_count  }} favorites | {{ t.retweet_count  }} retweets </span>
+              </div>
+            </div>  
+            {% endfor %}
+          </div>
+        </div>
+
+        <div class='row'>
+          <div class='col-md-12'>
+          <h4>Mentions</h4>      
+            {% for t in mentions %}
+            <div class='panel panel-default'>
+              <div class='panel-body'>
+                <h4><span>{{ t.text }}</span></h4>
+                <span>{{ t.created_at}} |</span>
+                <span>{{ t.favorite_count  }} favorites | {{ t.retweet_count  }} retweets </span>
+              </div>
+            </div>  
+            {% endfor %}
+          </div>
+        </div>
+
+{% endblock %}
+
+
+
+{% block scripts %}
+
+<script type="text/javascript">
+
+$(document).ready(function(){
+
+
+    $('#id_twittername').addClass('form-control');
+    $('#id_consumer_key').addClass('form-control');
+    $('#id_consumer_secret').addClass('form-control');
+    $('#id_access_token_key').addClass('form-control');
+    $('#id_access_token_secret').addClass('form-control');
+
+});
+
+
+</script>
+
+{% endblock %}
+
+
+
+
+
+
+
+              
+
+             
